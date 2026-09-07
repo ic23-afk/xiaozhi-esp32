@@ -45,21 +45,22 @@ private:
 
     void InitializeSsd1306Display() {
         // SSD1306 config
-        esp_lcd_panel_io_i2c_config_t io_config = {
-            .dev_addr = 0x3C,
-            .scl_speed_hz = 400 * 1000,
-            .control_phase_bytes = 1,
-            .dc_bit_offset = 6,
-            .lcd_cmd_bits = 8,
-            .lcd_param_bits = 8,
-            .on_color_trans_done = nullptr,
-            .user_ctx = nullptr,
-            .flags = {
-                .dc_low_on_data = 0,
-                .disable_control_phase = 0,
-            },
-        };
-
+      esp_lcd_panel_io_i2c_config_t io_config = {
+        .dev_addr = 0x3C,
+        .scl_speed_hz = 400 * 1000,
+        .lcd_cmd_bits = 8,
+        .lcd_param_bits = 8,
+        .dc_bit_offset = 6,
+        .lcd_trans_complete_cb = nullptr, // ya da on_color_trans_done (versiyona göre değişebilir)
+        .user_ctx = nullptr,
+        .control_phase_bytes = 1,
+        .dc_low_on_data = 0,
+        .disable_control_phase = 0,
+        .scl_active_high = 0,
+        .relax_on_read_cmd = 0,
+        .three_wire = 0,
+        .wait_for_idle = 0,
+    };
         ESP_ERROR_CHECK(esp_lcd_new_panel_io_i2c(display_i2c_bus_, &io_config, &panel_io_));
 
         ESP_LOGI(TAG, "Install SSD1306 driver");

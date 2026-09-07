@@ -72,7 +72,8 @@ private:
         };
         panel_config.vendor_config = &ssd1306_config;
 
-        ESP_ERROR_CHECK(esp_lcd_new_panel_ssd1306(panel_io_, &panel_config, &panel_));
+        ESP_ERROR_CHECK(esp_lcd_new_panel_sh1106(panel_io_, &panel_config, &panel_));
+        esp_lcd_panel_set_gap(panel_, 2, 0);
         ESP_LOGI(TAG, "SSD1306 driver installed");
 
         // Reset the display
